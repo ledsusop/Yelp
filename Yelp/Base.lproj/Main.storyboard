@@ -9,7 +9,7 @@
         <!--Businesses View Controller-->
         <scene sceneID="5L9-Uz-lNK">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="2xI-yr-O5N" customClass="BusinessesViewController" customModule="Yelpie" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="2xI-yr-O5N" customClass="BusinessesViewController" customModule="Yelp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hR0-74-jRp"/>
                         <viewControllerLayoutGuide type="bottom" id="VBY-gq-v8E"/>
@@ -22,14 +22,14 @@
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BusinessCell" id="Q1P-kz-lIo" customClass="BusinessCell" customModule="Yelpie" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BusinessCell" id="Q1P-kz-lIo" customClass="BusinessCell" customModule="Yelp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="1" width="320" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Q1P-kz-lIo" id="R8t-ea-BEd">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="99.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GP4-AB-wHW" customClass="FancyInsetImageView" customModule="Yelpie" customModuleProvider="target">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GP4-AB-wHW" customClass="FancyInsetImageView" customModule="Yelp" customModuleProvider="target">
                                                     <rect key="frame" x="13" y="13" width="65" height="65"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="65" id="2mM-If-MSN"/>
@@ -134,6 +134,7 @@
                     <navigationItem key="navigationItem" id="GMb-8a-kS3"/>
                     <connections>
                         <outlet property="tableView" destination="MoI-hf-43J" id="68k-h2-Acj"/>
+                        <segue destination="kK3-Z4-ddv" kind="modal" identifier="segueToFilter" id="xuj-cp-nYE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fgb-4b-F1b" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -144,6 +145,25 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1485" y="338"/>
+        </scene>
+        <!--Business Filter View Controller-->
+        <scene sceneID="h6o-Zk-xao">
+            <objects>
+                <viewController id="VeT-av-VJO" customClass="BusinessFilterViewController" customModule="Yelp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dCV-rD-eIh"/>
+                        <viewControllerLayoutGuide type="bottom" id="jVt-Ph-chE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="NCE-Vg-x7b">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="R7B-sh-qt2"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Eig-5r-ksR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2433" y="319"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Uxy-DZ-pju">
@@ -164,6 +184,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wbM-0X-aYg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="953" y="338"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="P4r-e3-DMe">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kK3-Z4-ddv" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="9WV-ms-fXW">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="VeT-av-VJO" kind="relationship" relationship="rootViewController" id="qhU-Nx-44f"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nFe-ta-1Ff" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1901" y="319"/>
         </scene>
     </scenes>
 </document>

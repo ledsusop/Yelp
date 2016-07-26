@@ -2,8 +2,8 @@
 //  YelpTests.swift
 //  YelpTests
 //
-//  Created by Timothy Lee on 9/19/14.
-//  Copyright (c) 2014 Timothy Lee. All rights reserved.
+//  Created by Ledesma Usop on 07/25/16.
+//  Copyright (c) 206 Ledesma Usop. All rights reserved.
 //
 
 import UIKit

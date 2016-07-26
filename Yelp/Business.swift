@@ -2,8 +2,8 @@
 //  Business.swift
 //  Yelp
 //
-//  Created by Timothy Lee on 4/23/15.
-//  Copyright (c) 2015 Timothy Lee. All rights reserved.
+//  Created by Ledesma Usop on 07/25/16.
+//  Copyright (c) 2016 Ledesma Usop. All rights reserved.
 //
 
 import UIKit
