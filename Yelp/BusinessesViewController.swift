@@ -99,6 +99,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
     override func awakeFromNib() {
         super.awakeFromNib()
         UIHelper.stylizeButton(self.barButton,state: UIControlState.Normal)
+        navigationController?.navigationBar.barStyle = UIBarStyle.Black
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
