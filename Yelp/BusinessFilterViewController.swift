@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BusinessFilterViewController: UIViewController {
+class BusinessFilterViewController: UITableViewController {
     
     let cancelButton = UIButton()
     var cancelNavBarItem : UIBarButtonItem!
@@ -76,6 +76,19 @@ class BusinessFilterViewController: UIViewController {
         UIHelper.stylizeButton(btn,state: UIControlState.Normal)
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)
+    {
+        let title = UILabel()
+        title.font = UIFont.boldSystemFontOfSize(15.0)
+        title.textColor = UIColor.blackColor()
+        
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.font=title.font
+        header.textLabel?.textColor=title.textColor
+    }
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
