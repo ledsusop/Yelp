@@ -14,7 +14,7 @@ class BusinessFilterViewController: UITableViewController {
     let saveButton = UIButton()
     
     let cellDescriptors = CellDescriptorHelper.getCellDescriptors()
-    let sectionDescriptors = CellDescriptorHelper.sections
+    let sectionDescriptors = CellDescriptorHelper.getSections()
     
     var visibleRowsPerSection = [[Int]]()
     
@@ -65,7 +65,9 @@ class BusinessFilterViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cellDescriptor = cellDescriptors[indexPath.row]
+        let sectionDescriptor = sectionDescriptors[indexPath.section]
+        
+        let cellDescriptor = cellDescriptors[indexPath.row + Int(sectionDescriptor["rowOffset"]!)!]
         let cellType = cellDescriptor["type"]
         
         var cell = tableView.dequeueReusableCellWithIdentifier(cellType!, forIndexPath: indexPath)
@@ -88,7 +90,9 @@ class BusinessFilterViewController: UITableViewController {
         return sectionDescriptors[section]["label"]
     }
     
-    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return section == 0 ? 0 : 44
+    }
 
     
     func prepareNavItems() {

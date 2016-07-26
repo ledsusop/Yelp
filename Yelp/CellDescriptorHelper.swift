@@ -9,7 +9,9 @@
 import UIKit
 
 class CellDescriptorHelper {
-    static let categories = [["name" : "Afghan", "code": "afghani"],
+    static func getCategories()->[[String:String]] {
+        
+    return [["name" : "Afghan", "code": "afghani"],
                       ["name" : "African", "code": "african"],
                       ["name" : "American, New", "code": "newamerican"],
                       ["name" : "American, Traditional", "code": "tradamerican"],
@@ -178,14 +180,19 @@ class CellDescriptorHelper {
                       ["name" : "Wok", "code": "wok"],
                       ["name" : "Wraps", "code": "wraps"],
                       ["name" : "Yugoslav", "code": "yugoslav"]]
+    }
     
-    static let sections = [
-        ["label":"Deal", "id":"deal", "visibleHeader":"false"],
-        ["label":"Distance", "id":"distance", "visibleHeader":"true"],
-        ["label":"Sort By", "id":"sort", "visibleHeader":"true"],
-        ["label":"Category", "id":"category", "visibleHeader":"true"],
+    static func getSections() -> [[String:String]]{
+        return [["label":"Deal", "id":"deal", "visibleHeader":"false", "rowOffset":"0"],
+        ["label":"Distance", "id":"distance", "visibleHeader":"true", "rowOffset":"1"],
+        ["label":"Sort By", "id":"sort", "visibleHeader":"true","rowOffset":"6"],
+        ["label":"Category", "id":"category", "visibleHeader":"true","rowOffset":"9"],
         ]
-    static let cellDescriptors = [
+    }
+    
+    static func getInitialCellDescriptors()->[[String:String]]{
+        
+    return [
         ["label":"Offering a deal", "value":"true", "type":"idCellSwitch", "section":"deal"],
         
         ["label":"Auto", "value":"auto", "type":"idCellValuePicker", "section":"distance"],
@@ -198,11 +205,12 @@ class CellDescriptorHelper {
         ["label":"Distance", "value":"distance", "type":"idCellValuePicker","section":"sort"],
         ["label":"Higest Rated", "value":"highestrated", "type":"idCellValuePicker","section":"sort"],
         ]
+    }
     
     static func getCellDescriptors()->[[String:String]] {
-        var descriptors = CellDescriptorHelper.cellDescriptors
+        var descriptors = CellDescriptorHelper.getInitialCellDescriptors()
         
-        for var category in CellDescriptorHelper.categories {
+        for var category in CellDescriptorHelper.getCategories() {
             category["value"] = category["code"]
             category["label"] = category["name"]
             category["section"] = "category"
