@@ -26,6 +26,8 @@ class BusinessFilterViewController: UIViewController {
     
     func prepareNavItems() {
         
+        self.navigationItem.title = "Filters"
+        
         saveButton.setTitle("Save", forState: UIControlState.Normal)
         saveButton.titleLabel!.font = UIFont(name: saveButton.titleLabel!.font.fontName, size: 13)
         
@@ -62,6 +64,7 @@ class BusinessFilterViewController: UIViewController {
     
     func onSearchButtonUp(btn:UIButton) {
         UIHelper.stylizeButton(btn,state: UIControlState.Normal)
+        dismissViewControllerAnimated(true, completion:  nil)
     }
     
     func onCancelButtonDown(btn:UIButton) {
@@ -71,6 +74,7 @@ class BusinessFilterViewController: UIViewController {
     
     func onCancelButtonUp(btn:UIButton) {
         UIHelper.stylizeButton(btn,state: UIControlState.Normal)
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     override func awakeFromNib() {
