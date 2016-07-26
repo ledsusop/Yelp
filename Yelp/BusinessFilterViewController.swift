@@ -11,10 +11,18 @@ import UIKit
 class BusinessFilterViewController: UITableViewController {
     
     let cancelButton = UIButton()
-    var cancelNavBarItem : UIBarButtonItem!
-    
     let saveButton = UIButton()
+    
+    let cellDescriptors = CellDescriptorHelper.getCellDescriptors()
+    let sectionDescriptors = CellDescriptorHelper.sections
+    
+    var visibleRowsPerSection = [[Int]]()
+    
+    @IBOutlet var filterTableView: UITableView!
+    
+    var cancelNavBarItem : UIBarButtonItem!
     var saveNavBarItem : UIBarButtonItem!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +31,65 @@ class BusinessFilterViewController: UITableViewController {
 
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        registerFilterTableCells()
+    }
+    
+    
+    
+    func registerFilterTableCells() {
+        filterTableView.registerNib(UINib(nibName: "NormalCell", bundle: nil), forCellReuseIdentifier: "idCellNormal")
+        filterTableView.registerNib(UINib(nibName: "SwitchCell", bundle: nil), forCellReuseIdentifier: "idCellSwitch")
+        filterTableView.registerNib(UINib(nibName: "ValuePickerCell", bundle: nil), forCellReuseIdentifier: "idCellValuePicker")
+    }
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return sectionDescriptors.count
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        var count:Int = 0
+        let sectionDescriptor = sectionDescriptors[section]
+        for var row in cellDescriptors{
+            if row["section"] == sectionDescriptor["id"]{
+                count+=1
+            }
+        }
+        
+        return count
+    }
+    
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cellDescriptor = cellDescriptors[indexPath.row]
+        let cellType = cellDescriptor["type"]
+        
+        var cell = tableView.dequeueReusableCellWithIdentifier(cellType!, forIndexPath: indexPath)
+        
+        if cellType == "idCellNormal"{
+            (cell as! NormalCell).titleLabel.text = cellDescriptor["label"]
+        }else if cellType == "idCellValuePicker"{
+            (cell as! ValuePickerCell).txtLabel.text = cellDescriptor["label"]
+        }else if cellType == "idCellSwitch"{
+            (cell as! SwitchCell).txtLabel.text = cellDescriptor["label"]
+        }else{
+            cell = UITableViewCell() as UITableViewCell
+            cell.textLabel?.text = cellDescriptor["label"]
+        }
+        
+        return cell
+    }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sectionDescriptors[section]["label"]
+    }
+    
+    
+
     
     func prepareNavItems() {
         
@@ -77,8 +144,24 @@ class BusinessFilterViewController: UITableViewController {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+//    func getIndicesOfVisibleRows() {
+//        visibleRowsPerSection.removeAll()
+//        
+//        for currentSectionCells in cellDescriptors {
+//            var visibleRows = [Int]()
+//            
+//            for row in 0...((currentSectionCells as! [[String: AnyObject]]).count - 1) {
+//                if currentSectionCells[row]["isVisible"] as! Bool == true {
+//                    visibleRows.append(row)
+//                }
+//            }
+//            
+//            visibleRowsPerSection.append(visibleRows)
+//        }
+//    }
     
-    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)
+    
+    /**override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)
     {
         let title = UILabel()
         title.font = UIFont.boldSystemFontOfSize(15.0)
@@ -87,7 +170,7 @@ class BusinessFilterViewController: UITableViewController {
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.font=title.font
         header.textLabel?.textColor=title.textColor
-    }
+    }**/
     
     
     override func awakeFromNib() {

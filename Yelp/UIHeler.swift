@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UIHelper: NSObject {
+class UIHelper {
     
     static func getNormalButtonColors() -> [CGColor]{
         return[

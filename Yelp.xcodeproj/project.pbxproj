@@ -20,6 +20,13 @@
 		36CEEFB11D46E1E40062980F /* UIHeler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CEEFB01D46E1E40062980F /* UIHeler.swift */; };
 		36CEEFB41D46E2200062980F /* BusinessCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CEEFB31D46E2200062980F /* BusinessCell.swift */; };
 		36FE5EB21D46E51E00DDBB30 /* BusinessFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FE5EB11D46E51E00DDBB30 /* BusinessFilterViewController.swift */; };
+		36FE5EC21D47EABC00DDBB30 /* NormalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36FE5EC11D47EABC00DDBB30 /* NormalCell.xib */; };
+		36FE5EC41D47EB1400DDBB30 /* SwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36FE5EC31D47EB1400DDBB30 /* SwitchCell.xib */; };
+		36FE5EC61D47EB5F00DDBB30 /* ValuePickerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36FE5EC51D47EB5F00DDBB30 /* ValuePickerCell.xib */; };
+		36FE5ECA1D47F85700DDBB30 /* NormalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FE5EC91D47F85700DDBB30 /* NormalCell.swift */; };
+		36FE5ECC1D47F91D00DDBB30 /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FE5ECB1D47F91D00DDBB30 /* SwitchCell.swift */; };
+		36FE5ECE1D47FDB000DDBB30 /* ValuePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FE5ECD1D47FDB000DDBB30 /* ValuePickerCell.swift */; };
+		36FE5ED01D48051F00DDBB30 /* CellDescriptorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FE5ECF1D48051F00DDBB30 /* CellDescriptorHelper.swift */; };
 		47848697133B87663A122E3D /* Pods_YelpTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1000F3975EB43318C1D4FA /* Pods_YelpTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +58,13 @@
 		36CEEFB01D46E1E40062980F /* UIHeler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIHeler.swift; sourceTree = "<group>"; };
 		36CEEFB31D46E2200062980F /* BusinessCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessCell.swift; sourceTree = "<group>"; };
 		36FE5EB11D46E51E00DDBB30 /* BusinessFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessFilterViewController.swift; sourceTree = "<group>"; };
+		36FE5EC11D47EABC00DDBB30 /* NormalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NormalCell.xib; sourceTree = "<group>"; };
+		36FE5EC31D47EB1400DDBB30 /* SwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SwitchCell.xib; sourceTree = "<group>"; };
+		36FE5EC51D47EB5F00DDBB30 /* ValuePickerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ValuePickerCell.xib; sourceTree = "<group>"; };
+		36FE5EC91D47F85700DDBB30 /* NormalCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalCell.swift; sourceTree = "<group>"; };
+		36FE5ECB1D47F91D00DDBB30 /* SwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchCell.swift; sourceTree = "<group>"; };
+		36FE5ECD1D47FDB000DDBB30 /* ValuePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValuePickerCell.swift; sourceTree = "<group>"; };
+		36FE5ECF1D48051F00DDBB30 /* CellDescriptorHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellDescriptorHelper.swift; sourceTree = "<group>"; };
 		5871D66103F8E8D78915F798 /* Pods-YelpTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YelpTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YelpTests/Pods-YelpTests.debug.xcconfig"; sourceTree = "<group>"; };
 		883322706A784248B16F444A /* Pods-Yelp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yelp.release.xcconfig"; path = "Pods/Target Support Files/Pods-Yelp/Pods-Yelp.release.xcconfig"; sourceTree = "<group>"; };
 		9B128C050DE78660DE2A8E75 /* Pods-YelpTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YelpTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-YelpTests/Pods-YelpTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -179,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				36CEEFB01D46E1E40062980F /* UIHeler.swift */,
+				36FE5ECF1D48051F00DDBB30 /* CellDescriptorHelper.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -187,6 +202,12 @@
 			isa = PBXGroup;
 			children = (
 				36CEEFB31D46E2200062980F /* BusinessCell.swift */,
+				36FE5EC11D47EABC00DDBB30 /* NormalCell.xib */,
+				36FE5EC31D47EB1400DDBB30 /* SwitchCell.xib */,
+				36FE5EC51D47EB5F00DDBB30 /* ValuePickerCell.xib */,
+				36FE5EC91D47F85700DDBB30 /* NormalCell.swift */,
+				36FE5ECB1D47F91D00DDBB30 /* SwitchCell.swift */,
+				36FE5ECD1D47FDB000DDBB30 /* ValuePickerCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -300,9 +321,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36FE5EC21D47EABC00DDBB30 /* NormalCell.xib in Resources */,
 				222D8A6019CCF9F900D2DB53 /* Main.storyboard in Resources */,
 				222D8A6519CCF9F900D2DB53 /* LaunchScreen.xib in Resources */,
+				36FE5EC61D47EB5F00DDBB30 /* ValuePickerCell.xib in Resources */,
 				222D8A6219CCF9F900D2DB53 /* Images.xcassets in Resources */,
+				36FE5EC41D47EB1400DDBB30 /* SwitchCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,14 +437,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36FE5ECE1D47FDB000DDBB30 /* ValuePickerCell.swift in Sources */,
 				36CEEFB41D46E2200062980F /* BusinessCell.swift in Sources */,
 				36CEEFB11D46E1E40062980F /* UIHeler.swift in Sources */,
 				22AAAA9C1AEA1EC300A544AF /* BusinessesViewController.swift in Sources */,
+				36FE5ED01D48051F00DDBB30 /* CellDescriptorHelper.swift in Sources */,
+				36FE5ECA1D47F85700DDBB30 /* NormalCell.swift in Sources */,
 				36CEEFAE1D46E1B10062980F /* FancyInsetImageView.swift in Sources */,
 				22AAAA991AEA0A9700A544AF /* Business.swift in Sources */,
 				222D8A7D19CCFAE000D2DB53 /* YelpClient.swift in Sources */,
 				36FE5EB21D46E51E00DDBB30 /* BusinessFilterViewController.swift in Sources */,
 				222D8A5B19CCF9F900D2DB53 /* AppDelegate.swift in Sources */,
+				36FE5ECC1D47F91D00DDBB30 /* SwitchCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
