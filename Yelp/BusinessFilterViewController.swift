@@ -75,6 +75,8 @@ class BusinessFilterViewController: UITableViewController, CustomTableCellDelega
                     
                     if sectionDescriptor["expandable"] == "true" {
                         sectionDescriptor["isExpanded"] = sectionDescriptor["isExpanded"] == "true" ? "false" : "true"
+                        preferencesValues[sectionDescriptor["id"]!] = descriptor["value"]
+                        self.sectionDescriptors[sectionindex] = sectionDescriptor
                         self.filterTableView.reloadSections(NSIndexSet(index: sectionindex), withRowAnimation: UITableViewRowAnimation.Fade)
                     }
                     
