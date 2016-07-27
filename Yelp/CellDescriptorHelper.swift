@@ -196,12 +196,12 @@ class CellDescriptorHelper {
     return [
         ["label":"Offering a deal", "value":"true", "type":"idCellSwitch", "section":"deal"],
         
-        ["label":"Auto", "value":"auto", "type":"idCellNormal", "section":"distance",],
-        ["label":"0.3 mile", "value":"0.3", "type":"idCellNormal","section":"distance"],
-        ["label":"1 mile", "value":"1", "type":"idCellNormal","section":"distance"],
-        ["label":"5 mile", "value":"5", "type":"idCellNormal","section":"distance"],
-        ["label":"20 mile", "value":"20", "type":"idCellNormal","section":"distance"],
-        
+        ["label":"Auto", "value":"0", "type":"idCellNormal", "section":"distance"],
+        ["label":"0.3 mile","value":"480", "type":"idCellNormal", "section":"distance"],
+        ["label":"1 mile", "value":"1600", "type":"idCellNormal", "section":"distance"],
+        ["label":"5 mile", "value":"8000", "type":"idCellNormal", "section":"distance"],
+        ["label":"20 mile", "value":"32000", "type":"idCellNormal", "section":"distance"],
+         
         ["label":"Best Match", "value":"bestmatch", "type":"idCellNormal","section":"sort"],
         ["label":"Distance", "value":"distance", "type":"idCellNormal","section":"sort"],
         ["label":"Higest Rated", "value":"highestrated", "type":"idCellNormal","section":"sort"],

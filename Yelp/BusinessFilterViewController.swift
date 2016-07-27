@@ -26,6 +26,7 @@ class BusinessFilterViewController: UITableViewController, CustomTableCellDelega
     
     @IBOutlet var filterTableView: UITableView!
     
+    weak var firstViewController : BusinessesViewController?
     var cancelNavBarItem : UIBarButtonItem!
     var saveNavBarItem : UIBarButtonItem!
     
@@ -94,7 +95,7 @@ class BusinessFilterViewController: UITableViewController, CustomTableCellDelega
         for var sectionDescriptor in self.sectionDescriptors{
             if sectionDescriptor["id"] == descriptor["section"] {
                 
-                preferencesValues[sectionDescriptor["id"]!] = descriptor["value"]
+                preferencesValues[sectionDescriptor["id"]!] = String(isOn)
                 self.sectionDescriptors[sectionindex] = sectionDescriptor
                 break
             }
@@ -119,10 +120,13 @@ class BusinessFilterViewController: UITableViewController, CustomTableCellDelega
             (cell as! NormalCell).cellDescriptor = cellDescriptor
         }else if cellType == "idCellValuePicker"{
             (cell as! ValuePickerCell).txtLabel.text = cellDescriptor["label"]
-            (cell as! NormalCell).cellDescriptor = cellDescriptor
+            (cell as! ValuePickerCell).cellDescriptor = cellDescriptor
+            (cell as! ValuePickerCell).delegate = self
         }else if cellType == "idCellSwitch"{
             (cell as! SwitchCell).txtLabel.text = cellDescriptor["label"]
             (cell as! SwitchCell).cellDescriptor = cellDescriptor
+            (cell as! SwitchCell).delegate = self
+            (cell as! SwitchCell).switchControl.on = (preferencesValues["deal"] == "true")
         }else{
             cell = UITableViewCell() as UITableViewCell
             cell.textLabel?.text = cellDescriptor["label"]
@@ -195,10 +199,19 @@ class BusinessFilterViewController: UITableViewController, CustomTableCellDelega
         UIHelper.stylizeButton(btn,state: UIControlState.Highlighted)
     }
     
+    func savePreferences(){
+        for defKey in self.preferencesValues.keys{
+            defaults.setValue(self.preferencesValues[defKey], forKey: defKey)
+            print("saved preference key " + defKey + " with value " + defaults.stringForKey(defKey)!)
+        }
+        self.firstViewController?.refreshPreferences()
+    }
+    
     
     func onSearchButtonUp(btn:UIButton) {
         UIHelper.stylizeButton(btn,state: UIControlState.Normal)
         self.savePreferences()
+        
         dismissViewControllerAnimated(true, completion:  nil)
     }
     
@@ -253,18 +266,6 @@ class BusinessFilterViewController: UITableViewController, CustomTableCellDelega
         // Dispose of any resources that can be recreated.
     }
     
-    func savePreferences(){
-        
-        for defKey in self.preferencesValues.keys{
-            defaults.setValue(self.preferencesValues[defKey], forKey: defKey)
-            print("saved preference key " + defKey + " with value " + defaults.stringForKey(defKey)!)
-        }
-    }
     
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let destinationController = segue.destinationViewController.childViewControllers[0] as! BusinessesViewController
-        destinationController.retrievePreferences()
-    }
-
+   
 }

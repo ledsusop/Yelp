@@ -21,15 +21,11 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
     var searchTerm = "Restaurants"
     var filterNavBarItem : UIBarButtonItem!
     var businesses: [Business]!
-    var initialDefaultPreferences = ["deal":"true","sort":"bestmatch","distance":"auto","category":"newamerican"]
+    var initialDefaultPreferences = ["deal":"true","sort":"bestmatch","distance":"0","category":"newamerican"]
     let defaults = NSUserDefaults.standardUserDefaults()
     var preferences:[String:String]! = [String:String]()
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        retrievePreferences()
-    }
     
-    func retrievePreferences(){
+    func refreshPreferences(){
         
         for defKey in self.initialDefaultPreferences.keys{
             if let curValue = defaults.stringForKey(defKey){
@@ -41,6 +37,8 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
                 print(defKey + " is not yet set. Setting initial default value " + defaults.stringForKey(defKey)!)
             }
         }
+        
+        doSearch()
     }
     
     override func viewDidLoad() {
@@ -53,7 +51,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        doSearch()
+        refreshPreferences()
     }
     
     
@@ -62,7 +60,21 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
         self.searchTerm = searchBar.text ?? DEFAULT_SEARCH_TERM
         MBProgressHUD.hideHUDForView(self.view, animated: true)
         MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        Business.searchWithTerm(self.searchTerm, sort: .Distance, categories: [], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
+        
+        var sortMode:YelpSortMode = .Distance
+        switch self.preferences["sort"]! {
+            case "distance":
+                sortMode = .Distance
+            case "bestmatch":
+                sortMode = .BestMatched
+            case "highestrated":
+                sortMode = .HighestRated
+            default:
+                sortMode = .Distance
+
+        }
+        
+        Business.searchWithTerm(self.searchTerm, sort: sortMode, categories: [self.preferences["category"]!], deals: (self.preferences["deal"]! == "true"),distance: Int(self.preferences["distance"]!)) { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses
             self.tableView.reloadData()
             for business in businesses {
@@ -149,6 +161,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
     
      override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
          let destinationController = segue.destinationViewController.childViewControllers[0] as! BusinessFilterViewController
+         destinationController.firstViewController = self
          destinationController.preferencesValues = self.preferences
      }
     

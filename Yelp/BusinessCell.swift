@@ -38,28 +38,28 @@ class BusinessCell: UITableViewCell {
     }
     
     internal func setImageURL(imageView:UIImageView, nsURL: NSURL?){
+        if nsURL != nil {
         let imageRequest = NSURLRequest(URL: nsURL!)
-        
-        
-        imageView.setImageWithURLRequest(
-            imageRequest,
-            placeholderImage: nil,
-            success: { (imageRequest, imageResponse, image) -> Void in
-                
-                // imageResponse will be nil if the image is cached
-                if imageResponse != nil {
-                    imageView.alpha = 0.0
-                    imageView.image = image
-                    UIView.animateWithDuration(0.3, animations: { () -> Void in
-                        imageView.alpha = 1.0
-                    })
-                } else {
-                    imageView.image = image
-                }
-            },
-            failure: { (imageRequest, imageResponse, error) -> Void in
-                // do something for the failure condition
-        })
+            imageView.setImageWithURLRequest(
+                imageRequest,
+                placeholderImage: nil,
+                success: { (imageRequest, imageResponse, image) -> Void in
+                    
+                    // imageResponse will be nil if the image is cached
+                    if imageResponse != nil {
+                        imageView.alpha = 0.0
+                        imageView.image = image
+                        UIView.animateWithDuration(0.3, animations: { () -> Void in
+                            imageView.alpha = 1.0
+                        })
+                    } else {
+                        imageView.image = image
+                    }
+                },
+                failure: { (imageRequest, imageResponse, error) -> Void in
+                    // do something for the failure condition
+            })
+        }
     }
     
     
