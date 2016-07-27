@@ -34,6 +34,8 @@ The following **additional** features are implemented:
 
 - [x] Programmatically generated gradient nav bar buttons
 - [x] Cell descriptor driven preferences page
+- [x] Images in cells are fading in while being loaded
+- [x] Images in cells have inner drop shadows applied 
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
@@ -44,7 +46,7 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/NHZPIqs.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/QUmRljF.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
