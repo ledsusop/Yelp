@@ -77,9 +77,11 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
         Business.searchWithTerm(self.searchTerm, sort: sortMode, categories: [self.preferences["category"]!], deals: (self.preferences["deal"]! == "true"),distance: Int(self.preferences["distance"]!)) { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses
             self.tableView.reloadData()
-            for business in businesses {
-                print(business.name!)
-                print(business.address!)
+            if businesses != nil {
+                for business in businesses {
+                    print(business.name!)
+                    print(business.address!)
+                }
             }
             MBProgressHUD.hideHUDForView(self.view, animated: true)
         }
