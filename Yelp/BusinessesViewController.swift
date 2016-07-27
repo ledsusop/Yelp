@@ -25,6 +25,8 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
     let defaults = NSUserDefaults.standardUserDefaults()
     var preferences:[String:String]! = [String:String]()
     
+    let refreshControl = UIRefreshControl()
+    
     func refreshPreferences(){
         
         for defKey in self.initialDefaultPreferences.keys{
@@ -51,13 +53,22 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
         
+        self.refreshControl.addTarget(self, action: #selector(self.doSearch(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        
+        tableView.addSubview(self.refreshControl)
+        
         refreshPreferences()
     }
     
     
-    func doSearch() {
+    func doSearch(refreshControl: UIRefreshControl? = nil) {
         
         self.searchTerm = searchBar.text ?? DEFAULT_SEARCH_TERM
+        
+        if refreshControl != nil {
+            refreshControl!.endRefreshing()
+        }
+        
         MBProgressHUD.hideHUDForView(self.view, animated: true)
         MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         
