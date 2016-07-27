@@ -21,7 +21,12 @@ class BusinessFilterViewController: UITableViewController, CustomTableCellDelega
     var cellDescriptors = CellDescriptorHelper.getCellDescriptors()
     var sectionDescriptors = CellDescriptorHelper.getSections()
     
-    var preferencesValues:[String:String]!
+    var currentCategories:[String] = [String]()
+    var preferencesValues:[String:String]!{
+        didSet {
+            self.currentCategories = preferencesValues["category"]!.characters.split{$0 == ","}.map(String.init)
+        }
+    }
     let defaults = NSUserDefaults.standardUserDefaults()
     
     @IBOutlet var filterTableView: UITableView!
@@ -95,8 +100,33 @@ class BusinessFilterViewController: UITableViewController, CustomTableCellDelega
         for var sectionDescriptor in self.sectionDescriptors{
             if sectionDescriptor["id"] == descriptor["section"] {
                 
-                preferencesValues[sectionDescriptor["id"]!] = String(isOn)
+                
+                if descriptor["section"] == "deal"{
+                    preferencesValues["deal"]! = String(isOn)
+                }else if descriptor["section"] == "category"{
+                    
+                    var curIndex = 0
+                    var foundIndex = -1
+                    for curCat in self.currentCategories {
+                        if curCat == descriptor["value"] {
+                            foundIndex = curIndex
+                            break
+                        }
+                        curIndex+=1
+                    }
+                    
+                    if foundIndex < 0 && isOn {
+                        self.currentCategories.append(descriptor["value"]!)
+                    }else if foundIndex >= 0 && !isOn{
+                        self.currentCategories.removeAtIndex(foundIndex)
+                    }
+                    preferencesValues["category"] = self.currentCategories.joinWithSeparator(",")
+                }
+                
                 self.sectionDescriptors[sectionindex] = sectionDescriptor
+
+                
+                
                 break
             }
             sectionindex+=1
@@ -126,7 +156,21 @@ class BusinessFilterViewController: UITableViewController, CustomTableCellDelega
             (cell as! SwitchCell).txtLabel.text = cellDescriptor["label"]
             (cell as! SwitchCell).cellDescriptor = cellDescriptor
             (cell as! SwitchCell).delegate = self
-            (cell as! SwitchCell).switchControl.on = (preferencesValues["deal"] == "true")
+            
+            if cellDescriptor["section"] == "deal"{
+                (cell as! SwitchCell).switchControl.on = (preferencesValues["deal"] == "true")
+            }else if cellDescriptor["section"] == "category"{
+                
+                var isSelectedCategory = false
+                for cat in self.currentCategories{
+                    if cat == cellDescriptor["value"] {
+                        isSelectedCategory = true
+                        break
+                    }
+                }
+                (cell as! SwitchCell).switchControl.on = isSelectedCategory
+            }
+            
         }else{
             cell = UITableViewCell() as UITableViewCell
             cell.textLabel?.text = cellDescriptor["label"]

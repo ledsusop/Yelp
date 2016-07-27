@@ -187,7 +187,7 @@ class CellDescriptorHelper {
             ["label":"Deal", "id":"deal", "visibleHeader":"false", "rowOffset":"0", "expandable":"false","isExpanded":"false"],
             ["label":"Distance", "id":"distance", "visibleHeader":"true", "rowOffset":"1", "expandable":"true","isExpanded":"false"],
             ["label":"Sort By", "id":"sort", "visibleHeader":"true","rowOffset":"6", "expandable":"true","isExpanded":"false"],
-            ["label":"Category", "id":"category", "visibleHeader":"true","rowOffset":"9", "expandable":"true","isExpanded":"false"],
+            ["label":"Category", "id":"category", "visibleHeader":"true","rowOffset":"9", "expandable":"false","isExpanded":"false"],
         ]
     }
     
@@ -215,7 +215,7 @@ class CellDescriptorHelper {
             category["value"] = category["code"]
             category["label"] = category["name"]
             category["section"] = "category"
-            category["type"] = "idCellNormal"
+            category["type"] = "idCellSwitch"
             descriptors.append(category)
         }
         return descriptors
