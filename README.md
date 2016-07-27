@@ -51,6 +51,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 - Adding inner drop shadows to images is non trivial
 - Creation of filter table view had to be driven from  cell and section descriptor data structures for more flexibility
 - Adding custom gradients to nav button bars is non trivial
+- Implementing the accordion-like behavior in some filter sections is also non trivial
 
 ## License
 
