@@ -11,6 +11,10 @@ import UIKit
 class ValuePickerCell: UITableViewCell {
 
     @IBOutlet weak var txtLabel: UILabel!
+    
+    var delegate:CustomTableCellDelegate!
+     var cellDescriptor:[String:String]!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -19,7 +23,11 @@ class ValuePickerCell: UITableViewCell {
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
+        if delegate != nil{
+            delegate.onSelectedCell(selected, source: self, descriptor:cellDescriptor)
+        }
     }
+    
+    
 
 }

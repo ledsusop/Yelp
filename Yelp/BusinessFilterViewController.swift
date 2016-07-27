@@ -8,15 +8,20 @@
 
 import UIKit
 
-class BusinessFilterViewController: UITableViewController {
+protocol CustomTableCellDelegate{
+    func onSelectedCell(selected:Bool, source:UITableViewCell, descriptor:[String:String])
+    func onValueChanged(isOn: Bool, source:SwitchCell, descriptor:[String:String])
+}
+
+class BusinessFilterViewController: UITableViewController, CustomTableCellDelegate {
     
     let cancelButton = UIButton()
     let saveButton = UIButton()
     
-    let cellDescriptors = CellDescriptorHelper.getCellDescriptors()
-    let sectionDescriptors = CellDescriptorHelper.getSections()
+    var cellDescriptors = CellDescriptorHelper.getCellDescriptors()
+    var sectionDescriptors = CellDescriptorHelper.getSections()
     
-    var visibleRowsPerSection = [[Int]]()
+    var preferencesValues = ["deal":"true","sort":"bestmatch","distance":"auto","category":"newamerican"]
     
     @IBOutlet var filterTableView: UITableView!
     
@@ -62,6 +67,32 @@ class BusinessFilterViewController: UITableViewController {
         return count
     }
     
+    func onSelectedCell(selected:Bool, source:UITableViewCell, descriptor:[String:String]){
+        if selected {
+            var sectionindex = 0
+            for var sectionDescriptor in self.sectionDescriptors{
+                if sectionDescriptor["id"] == descriptor["section"] {
+                    
+                    if sectionDescriptor["expandable"] == "true" {
+                        sectionDescriptor["isExpanded"] = sectionDescriptor["isExpanded"] == "true" ? "false" : "true"
+                        self.filterTableView.reloadSections(NSIndexSet(index: sectionindex), withRowAnimation: UITableViewRowAnimation.Fade)
+                    }
+                    
+                    break
+                }
+                sectionindex+=1
+            }
+            
+            
+            
+            
+            
+        }
+    }
+    
+    func onValueChanged(isOn: Bool, source:SwitchCell, descriptor:[String:String]){
+        
+    }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -69,21 +100,45 @@ class BusinessFilterViewController: UITableViewController {
         
         let cellDescriptor = cellDescriptors[indexPath.row + Int(sectionDescriptor["rowOffset"]!)!]
         let cellType = cellDescriptor["type"]
+        let currentValue = preferencesValues[sectionDescriptor["id"]!]
         
         var cell = tableView.dequeueReusableCellWithIdentifier(cellType!, forIndexPath: indexPath)
         
         if cellType == "idCellNormal"{
-            (cell as! NormalCell).titleLabel.text = cellDescriptor["label"]
+            (cell as! NormalCell).titleLabel.text = ""
+            (cell as! NormalCell).detailLabel.text = cellDescriptor["label"]
+            (cell as! NormalCell).delegate = self
+            (cell as! NormalCell).cellDescriptor = cellDescriptor
         }else if cellType == "idCellValuePicker"{
             (cell as! ValuePickerCell).txtLabel.text = cellDescriptor["label"]
+            (cell as! NormalCell).cellDescriptor = cellDescriptor
         }else if cellType == "idCellSwitch"{
             (cell as! SwitchCell).txtLabel.text = cellDescriptor["label"]
+            (cell as! SwitchCell).cellDescriptor = cellDescriptor
         }else{
             cell = UITableViewCell() as UITableViewCell
             cell.textLabel?.text = cellDescriptor["label"]
         }
         
+        if sectionDescriptor["expandable"] == "true" && currentValue != cellDescriptor["value"]{
+            cell.hidden = sectionDescriptor["isExpanded"] != "true"
+        }
+        
+        
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        let sectionDescriptor = sectionDescriptors[indexPath.section]
+        let currentValue = preferencesValues[sectionDescriptor["id"]!]
+        let cellDescriptor = cellDescriptors[indexPath.row + Int(sectionDescriptor["rowOffset"]!)!]
+        
+        if sectionDescriptor["expandable"] == "true" && currentValue != cellDescriptor["value"]{
+            return sectionDescriptor["isExpanded"] == "true" ? 44 : 0
+        }else{
+            return 44
+        }
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

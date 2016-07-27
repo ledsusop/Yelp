@@ -183,10 +183,11 @@ class CellDescriptorHelper {
     }
     
     static func getSections() -> [[String:String]]{
-        return [["label":"Deal", "id":"deal", "visibleHeader":"false", "rowOffset":"0"],
-        ["label":"Distance", "id":"distance", "visibleHeader":"true", "rowOffset":"1"],
-        ["label":"Sort By", "id":"sort", "visibleHeader":"true","rowOffset":"6"],
-        ["label":"Category", "id":"category", "visibleHeader":"true","rowOffset":"9"],
+        return [
+            ["label":"Deal", "id":"deal", "visibleHeader":"false", "rowOffset":"0", "expandable":"false","isExpanded":"false"],
+            ["label":"Distance", "id":"distance", "visibleHeader":"true", "rowOffset":"1", "expandable":"true","isExpanded":"false"],
+            ["label":"Sort By", "id":"sort", "visibleHeader":"true","rowOffset":"6", "expandable":"true","isExpanded":"false"],
+            ["label":"Category", "id":"category", "visibleHeader":"true","rowOffset":"9", "expandable":"true","isExpanded":"false"],
         ]
     }
     
@@ -195,15 +196,15 @@ class CellDescriptorHelper {
     return [
         ["label":"Offering a deal", "value":"true", "type":"idCellSwitch", "section":"deal"],
         
-        ["label":"Auto", "value":"auto", "type":"idCellValuePicker", "section":"distance"],
-        ["label":"0.3 mile", "value":"0.3", "type":"idCellValuePicker","section":"distance"],
-        ["label":"1 mile", "value":"1", "type":"idCellValuePicker","section":"distance"],
-        ["label":"5 mile", "value":"5", "type":"idCellValuePicker","section":"distance"],
-        ["label":"20 mile", "value":"20", "type":"idCellValuePicker","section":"distance"],
+        ["label":"Auto", "value":"auto", "type":"idCellNormal", "section":"distance",],
+        ["label":"0.3 mile", "value":"0.3", "type":"idCellNormal","section":"distance"],
+        ["label":"1 mile", "value":"1", "type":"idCellNormal","section":"distance"],
+        ["label":"5 mile", "value":"5", "type":"idCellNormal","section":"distance"],
+        ["label":"20 mile", "value":"20", "type":"idCellNormal","section":"distance"],
         
-        ["label":"Best Match", "value":"bestmatch", "type":"idCellValuePicker","section":"sort"],
-        ["label":"Distance", "value":"distance", "type":"idCellValuePicker","section":"sort"],
-        ["label":"Higest Rated", "value":"highestrated", "type":"idCellValuePicker","section":"sort"],
+        ["label":"Best Match", "value":"bestmatch", "type":"idCellNormal","section":"sort"],
+        ["label":"Distance", "value":"distance", "type":"idCellNormal","section":"sort"],
+        ["label":"Higest Rated", "value":"highestrated", "type":"idCellNormal","section":"sort"],
         ]
     }
     
@@ -214,7 +215,7 @@ class CellDescriptorHelper {
             category["value"] = category["code"]
             category["label"] = category["name"]
             category["section"] = "category"
-            category["type"] = "idCellValuePicker"
+            category["type"] = "idCellNormal"
             descriptors.append(category)
         }
         return descriptors

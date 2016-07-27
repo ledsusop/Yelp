@@ -8,11 +8,16 @@
 
 import UIKit
 
+
+
 class NormalCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
    
     @IBOutlet weak var detailLabel: UILabel!
+    
+    var delegate:CustomTableCellDelegate!
+    var cellDescriptor:[String:String]!
     
     override func awakeFromNib() {
         
@@ -23,7 +28,9 @@ class NormalCell: UITableViewCell {
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
+        if delegate != nil{
+            delegate.onSelectedCell(selected, source: self, descriptor: cellDescriptor)
+        }
     }
 
 }
