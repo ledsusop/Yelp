@@ -34,6 +34,8 @@ The following **additional** features are implemented:
 
 - [x] Programmatically generated gradient nav bar buttons
 - [x] Cell descriptor driven preferences page
+- [x] Images in cells are fading in while being loaded
+- [x] Images in cells have inner drop shadows applied 
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
