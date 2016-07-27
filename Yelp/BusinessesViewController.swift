@@ -10,21 +10,22 @@ import UIKit
 import MBProgressHUD
 
 
-class BusinessesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+class BusinessesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UIScrollViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
-    
+    let ITEMS_PER_PAGE = 20
     let DEFAULT_SEARCH_TERM = "Restaurants"
     let searchBar = UISearchBar()
     let barButton = UIButton()
     var searchTerm = "Restaurants"
     var filterNavBarItem : UIBarButtonItem!
-    var businesses: [Business]!
+    var businesses: [Business] = [Business]()
     var initialDefaultPreferences = ["deal":"true","sort":"bestmatch","distance":"0","category":"newamerican"]
     let defaults = NSUserDefaults.standardUserDefaults()
     var preferences:[String:String]! = [String:String]()
-    
+    var isMoreDataLoading = false
+    var loadReplacesItems = true
     let refreshControl = UIRefreshControl()
     
     func refreshPreferences(){
@@ -41,6 +42,20 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         
         doSearch()
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if (!isMoreDataLoading) {
+            let scrollViewContentHeight = tableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+            
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.dragging) {
+                isMoreDataLoading = true
+                loadReplacesItems = false
+                doSearch()
+            }
+            
+        }
     }
     
     override func viewDidLoad() {
@@ -85,8 +100,14 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
 
         }
         
-        Business.searchWithTerm(self.searchTerm, sort: sortMode, categories: [self.preferences["category"]!], deals: (self.preferences["deal"]! == "true"),distance: Int(self.preferences["distance"]!)) { (businesses: [Business]!, error: NSError!) -> Void in
-            self.businesses = businesses
+        Business.searchWithTerm(self.searchTerm, sort: sortMode, categories: [self.preferences["category"]!], deals: (self.preferences["deal"]! == "true"), distance: Int(self.preferences["distance"]!), limit: self.loadReplacesItems ? ITEMS_PER_PAGE : nil, offset: self.loadReplacesItems ? self.businesses.count : nil) { (businesses: [Business]!, error: NSError!) -> Void in
+            
+            if self.loadReplacesItems {
+                self.businesses = businesses
+            }else{
+                self.businesses.appendContentsOf(businesses)
+            }
+            
             self.tableView.reloadData()
             if businesses != nil {
                 for business in businesses {
@@ -94,6 +115,8 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
                     print(business.address!)
                 }
             }
+            self.isMoreDataLoading = false
+            self.loadReplacesItems = true
             MBProgressHUD.hideHUDForView(self.view, animated: true)
         }
     }
@@ -150,11 +173,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if businesses != nil{
-            return businesses.count
-        }else{
-            return 0
-        }
+       return businesses.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
