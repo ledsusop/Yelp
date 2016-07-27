@@ -21,6 +21,27 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
     var searchTerm = "Restaurants"
     var filterNavBarItem : UIBarButtonItem!
     var businesses: [Business]!
+    var initialDefaultPreferences = ["deal":"true","sort":"bestmatch","distance":"auto","category":"newamerican"]
+    let defaults = NSUserDefaults.standardUserDefaults()
+    var preferences:[String:String]! = [String:String]()
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        retrievePreferences()
+    }
+    
+    func retrievePreferences(){
+        
+        for defKey in self.initialDefaultPreferences.keys{
+            if let curValue = defaults.stringForKey(defKey){
+                preferences[defKey] = curValue
+                print(defKey + " is already set with value "+curValue)
+            }else{
+                defaults.setValue(self.initialDefaultPreferences[defKey], forKey: defKey)
+                preferences[defKey] = self.initialDefaultPreferences[defKey]
+                print(defKey + " is not yet set. Setting initial default value " + defaults.stringForKey(defKey)!)
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -123,18 +144,14 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
      override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
+         let destinationController = segue.destinationViewController.childViewControllers[0] as! BusinessFilterViewController
+         destinationController.preferencesValues = self.preferences
      }
-     */
+    
     
 }
 

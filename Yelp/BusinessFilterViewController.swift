@@ -21,7 +21,8 @@ class BusinessFilterViewController: UITableViewController, CustomTableCellDelega
     var cellDescriptors = CellDescriptorHelper.getCellDescriptors()
     var sectionDescriptors = CellDescriptorHelper.getSections()
     
-    var preferencesValues = ["deal":"true","sort":"bestmatch","distance":"auto","category":"newamerican"]
+    var preferencesValues:[String:String]!
+    let defaults = NSUserDefaults.standardUserDefaults()
     
     @IBOutlet var filterTableView: UITableView!
     
@@ -85,15 +86,20 @@ class BusinessFilterViewController: UITableViewController, CustomTableCellDelega
                 sectionindex+=1
             }
             
-            
-            
-            
-            
         }
     }
     
     func onValueChanged(isOn: Bool, source:SwitchCell, descriptor:[String:String]){
-        
+        var sectionindex = 0
+        for var sectionDescriptor in self.sectionDescriptors{
+            if sectionDescriptor["id"] == descriptor["section"] {
+                
+                preferencesValues[sectionDescriptor["id"]!] = descriptor["value"]
+                self.sectionDescriptors[sectionindex] = sectionDescriptor
+                break
+            }
+            sectionindex+=1
+        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -192,6 +198,7 @@ class BusinessFilterViewController: UITableViewController, CustomTableCellDelega
     
     func onSearchButtonUp(btn:UIButton) {
         UIHelper.stylizeButton(btn,state: UIControlState.Normal)
+        self.savePreferences()
         dismissViewControllerAnimated(true, completion:  nil)
     }
     
@@ -246,15 +253,18 @@ class BusinessFilterViewController: UITableViewController, CustomTableCellDelega
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func savePreferences(){
+        
+        for defKey in self.preferencesValues.keys{
+            defaults.setValue(self.preferencesValues[defKey], forKey: defKey)
+            print("saved preference key " + defKey + " with value " + defaults.stringForKey(defKey)!)
+        }
     }
-    */
+    
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let destinationController = segue.destinationViewController.childViewControllers[0] as! BusinessesViewController
+        destinationController.retrievePreferences()
+    }
 
 }
