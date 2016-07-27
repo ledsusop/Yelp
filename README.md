@@ -2,7 +2,7 @@
 
 Yelp is a Yelp search app using the [Yelp API](http://www.yelp.com/developers/documentation/v2/search_api).
 
-Time spent: **11** hours spent in total
+Time spent: **12** hours spent in total
 
 ## User Stories
 
@@ -21,8 +21,8 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-- [ ] Search results page
-   - [ ] Infinite scroll for restaurant results.
+- [x] Search results page
+   - [x] Infinite scroll for restaurant results.
    - [ ] Implement map view of restaurant results.
 - [x] Filter page
    - [ ] Implement a custom switch instead of the default UISwitch.
@@ -36,13 +36,14 @@ The following **additional** features are implemented:
 - [x] Cell descriptor driven preferences page
 - [x] Images in cells are fading in while being loaded
 - [x] Images in cells have inner drop shadows applied 
+- [x] Table view uses refresh control to refresh a page
 
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/QUmRljF.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/Q7qRtY5.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
