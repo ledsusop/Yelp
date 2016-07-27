@@ -25,7 +25,6 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
     let defaults = NSUserDefaults.standardUserDefaults()
     var preferences:[String:String]! = [String:String]()
     var isMoreDataLoading = false
-    var loadReplacesItems = true
     let refreshControl = UIRefreshControl()
     
     func refreshPreferences(){
@@ -40,8 +39,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
                 print(defKey + " is not yet set. Setting initial default value " + defaults.stringForKey(defKey)!)
             }
         }
-        
-        doSearch()
+        doSearch(true)
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -51,8 +49,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
             
             if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.dragging) {
                 isMoreDataLoading = true
-                loadReplacesItems = false
-                doSearch()
+                doSearch(false)
             }
             
         }
@@ -68,15 +65,18 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        self.refreshControl.addTarget(self, action: #selector(self.doSearch(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl.addTarget(self, action: #selector(self.refreshSearch(_:)), forControlEvents: UIControlEvents.ValueChanged)
         
         tableView.addSubview(self.refreshControl)
         
         refreshPreferences()
     }
     
+    func refreshSearch(refreshControl: UIRefreshControl){
+        doSearch(true, refreshControl: refreshControl)
+    }
     
-    func doSearch(refreshControl: UIRefreshControl? = nil) {
+    func doSearch(replaceItems: Bool, refreshControl: UIRefreshControl? = nil) {
         
         self.searchTerm = searchBar.text ?? DEFAULT_SEARCH_TERM
         
@@ -100,9 +100,9 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
 
         }
         
-        Business.searchWithTerm(self.searchTerm, sort: sortMode, categories: [self.preferences["category"]!], deals: (self.preferences["deal"]! == "true"), distance: Int(self.preferences["distance"]!), limit: self.loadReplacesItems ? ITEMS_PER_PAGE : nil, offset: self.loadReplacesItems ? self.businesses.count : nil) { (businesses: [Business]!, error: NSError!) -> Void in
+        Business.searchWithTerm(self.searchTerm, sort: sortMode, categories: [self.preferences["category"]!], deals: (self.preferences["deal"]! == "true"), distance: Int(self.preferences["distance"]!), limit: replaceItems ? nil : ITEMS_PER_PAGE, offset: replaceItems ? nil : self.businesses.count) { (businesses: [Business]!, error: NSError!) -> Void in
             
-            if self.loadReplacesItems {
+            if replaceItems {
                 self.businesses = businesses
             }else{
                 self.businesses.appendContentsOf(businesses)
@@ -116,7 +116,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
                 }
             }
             self.isMoreDataLoading = false
-            self.loadReplacesItems = true
+            
             MBProgressHUD.hideHUDForView(self.view, animated: true)
         }
     }
@@ -162,8 +162,13 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
         }else{
             self.searchTerm = searchText
         }
-        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(self.doSearch), object: nil)
-        self.performSelector(#selector(self.doSearch), withObject: nil, afterDelay: 0.7)
+        
+        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(self.searchFromSearchBar), object: nil)
+        self.performSelector(#selector(self.searchFromSearchBar), withObject: nil, afterDelay: 0.7)
+    }
+    
+    func searchFromSearchBar(){
+        doSearch(true)
     }
     
     override func awakeFromNib() {
