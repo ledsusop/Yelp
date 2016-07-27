@@ -2,7 +2,7 @@
 
 Yelp is a Yelp search app using the [Yelp API](http://www.yelp.com/developers/documentation/v2/search_api).
 
-Time spent: **10** hours spent in total
+Time spent: **11** hours spent in total
 
 ## User Stories
 
@@ -37,10 +37,6 @@ The following **additional** features are implemented:
 - [x] Images in cells are fading in while being loaded
 - [x] Images in cells have inner drop shadows applied 
 
-Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
-
-1.
-2.
 
 ## Video Walkthrough
 
@@ -52,7 +48,9 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+- Adding inner drop shadows to images is non trivial
+- Creation of filter table view had to be driven from  cell and section descriptor data structures for more flexibility
+- Adding custom gradients to nav button bars is non trivial
 
 ## License
 
